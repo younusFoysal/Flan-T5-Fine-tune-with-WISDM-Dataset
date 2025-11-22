@@ -15,11 +15,11 @@ Standing       48394
 Name: count, dtype: int64
 
 Creating sliding windows (size=80, step=40)...
-100%|██████████| 179/179 [00:00<00:00, 262.37it/s]
+100%|██████████| 179/179 [00:00<00:00, 262.33it/s]
 Created 26893 windows
 
 Converting windows to text format...
-100%|██████████| 26893/26893 [00:05<00:00, 4488.47it/s]
+100%|██████████| 26893/26893 [00:05<00:00, 4955.95it/s]
 Created 26893 text examples
 
 Sample input: Accelerometer data: x-axis mean -1.79 std 3.26, y-axis mean 9.81 std 4.16, z-axis mean 2.38 std 4.43. What activity is this?
@@ -29,65 +29,80 @@ Splitting dataset...
 Train: 19362, Validation: 2152, Test: 5379
 
 Loading FLAN-T5 model: google/flan-t5-small...
-Using device: cuda
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:94: UserWarning: 
+The secret `HF_TOKEN` does not exist in your Colab secrets.
+To authenticate with the Hugging Face Hub, create a token in your settings tab (https://huggingface.co/settings/tokens), set it as secret in your Google Colab and restart your session.
+You will be able to reuse this secret in all of your notebooks.
+Please note that authentication is recommended but still optional to access public models or datasets.
+  warnings.warn(
+tokenizer_config.json:  2.54k/? [00:00<00:00, 81.1kB/s]spiece.model: 100% 792k/792k [00:00<00:00, 173kB/s]tokenizer.json:  2.42M/? [00:00<00:00, 27.2MB/s]special_tokens_map.json:  2.20k/? [00:00<00:00, 117kB/s]config.json:  1.40k/? [00:00<00:00, 57.3kB/s]model.safetensors: 100% 308M/308M [00:02<00:00, 143MB/s]generation_config.json: 100% 147/147 [00:00<00:00, 5.83kB/s]Using device: cuda
 
 Tokenizing dataset...
-Map: 100% 19362/19362 [00:05<00:00, 3182.99 examples/s]Map: 100% 2152/2152 [00:00<00:00, 4152.77 examples/s]Map: 100% 5379/5379 [00:01<00:00, 2708.87 examples/s]Tokenization complete!
+Map: 100% 19362/19362 [00:14<00:00, 1482.72 examples/s]Map: 100% 2152/2152 [00:01<00:00, 1703.98 examples/s]Map: 100% 5379/5379 [00:03<00:00, 1488.22 examples/s]Tokenization complete!
 
 Setting up training...
 Starting training...
+/tmp/ipython-input-3577950950.py:78: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `Seq2SeqTrainer.__init__`. Use `processing_class` instead.
+  trainer = Seq2SeqTrainer(
 
-
-
-
-      [6055/6055 12:58, Epoch 5/5]
-
-
-
-
+    
+      
+      
+      [6055/6055 45:41, Epoch 5/5]
+    
+    
+  
+ 
       Epoch
       Training Loss
       Validation Loss
-
-
-
-
+      Accuracy
+    
+  
+  
+    
       1
       0.000000
       nan
-
-
+      0.000000
+    
+    
       2
       0.000000
       nan
-
-
+      0.000000
+    
+    
       3
       0.000000
       nan
-
-
+      0.000000
+    
+    
       4
       0.000000
       nan
-
-
+      0.000000
+    
+    
       5
       0.000000
       nan
-
-
+      0.000000
+    
+  
 
 Training complete!
 
 Evaluating on test set...
 
-
-
-
-      [337/337 00:16]
-
-    Test Loss: nan
+    
+      
+      
+      [337/337 03:23]
+    
+    The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Test Loss: nan
 
 ============================================================
 Testing predictions on sample inputs...
@@ -95,33 +110,33 @@ Testing predictions on sample inputs...
 
 Sample 1:
 Input: Accelerometer data: x-axis mean -1.15 std 4.20, y-axis mean 9.03 std 8.71, z-axis mean 1.77 std 5.83. What activity is this?...
-Predicted Activity: x-axis mean -1.
+Predicted Activity: z-axis mean 1.77 std 5.83
 
 Sample 2:
 Input: Accelerometer data: x-axis mean 4.01 std 2.56, y-axis mean 9.19 std 3.56, z-axis mean 1.30 std 2.71. What activity is this?...
-Predicted Activity: x-axis mean 4.01
+Predicted Activity: x-axis mean 4.01 std 2.56,
 
 Sample 3:
 Input: Accelerometer data: x-axis mean 0.00 std 0.00, y-axis mean 0.00 std 0.00, z-axis mean 0.00 std 0.00. What activity is this?...
-Predicted Activity: Y-axis mean 0.00
+Predicted Activity: Y-axis mean 0.00 std 0.00,
 
 Sample 4:
 Input: Accelerometer data: x-axis mean 1.00 std 0.04, y-axis mean 9.92 std 0.02, z-axis mean 0.30 std 0.03. What activity is this?...
-Predicted Activity: z-axis mean 0.30
+Predicted Activity: z-axis mean 0.30 std 0.03
 
 Sample 5:
 Input: Accelerometer data: x-axis mean -1.07 std 2.81, y-axis mean 10.04 std 4.20, z-axis mean 0.49 std 4.33. What activity is this?...
-Predicted Activity: z-axis mean 0.49
+Predicted Activity: z-axis mean 0.49 std 4.33
 ============================================================
 
 ============================================================
 Sample Predictions vs Ground Truth:
 ============================================================
-Sample 1: Predicted='x-axis mean -1.' | Actual='Jogging' | Match=False
-Sample 2: Predicted='x-axis mean 4.01' | Actual='Walking' | Match=False
-Sample 3: Predicted='Y-axis mean 0.00' | Actual='Jogging' | Match=False
-Sample 4: Predicted='z-axis mean 0.30' | Actual='Standing' | Match=False
-Sample 5: Predicted='z-axis mean 0.49' | Actual='Walking' | Match=False
+Sample 1: Predicted='z-axis mean 1.77 std 5.83' | Actual='Jogging' | Match=False
+Sample 2: Predicted='x-axis mean 4.01 std 2.56,' | Actual='Walking' | Match=False
+Sample 3: Predicted='Y-axis mean 0.00 std 0.00,' | Actual='Jogging' | Match=False
+Sample 4: Predicted='z-axis mean 0.30 std 0.03' | Actual='Standing' | Match=False
+Sample 5: Predicted='z-axis mean 0.49 std 4.33' | Actual='Walking' | Match=False
 
 Sample Accuracy: 0.0%
 
